@@ -6,7 +6,7 @@ public class Enfermidade {
     int idEnfermidade;
 
     @NotBlank
-    @Pattern(regexp = "^[A-Z]\\d{2,3}$")
+    @Pattern(regexp = "^[A-Z]\\d{2}$")
     String CID;
 
     @NotBlank

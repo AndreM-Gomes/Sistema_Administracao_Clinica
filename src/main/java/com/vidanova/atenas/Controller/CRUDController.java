@@ -4,6 +4,7 @@ import com.vidanova.atenas.Model.Entidades.Enfermidade;
 import com.vidanova.atenas.Model.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -30,8 +31,9 @@ public abstract class CRUDController<T> {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public int criar(@Valid @RequestBody T t){
-        return repository.salvar(t);
+    public ResponseEntity<T> criar(@Valid @RequestBody T t){
+        repository.salvar(t);
+        return ResponseEntity.ok(t);
     }
 
     @PutMapping(value = "/{id}")
