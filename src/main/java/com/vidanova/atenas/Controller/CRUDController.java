@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +30,7 @@ public abstract class CRUDController<T> {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public int criar(@RequestBody T t){
+    public int criar(@Valid @RequestBody T t){
         return repository.salvar(t);
     }
 
