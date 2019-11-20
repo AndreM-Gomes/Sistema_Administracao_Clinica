@@ -36,7 +36,7 @@ public abstract class CRUDController<T> {
 
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void atualizar(@PathVariable("id") int id,@RequestBody T t){
+    public void atualizar(@Valid @PathVariable("id") int id,@RequestBody T t){
        repository.atualizar(t,id);
     }
 
