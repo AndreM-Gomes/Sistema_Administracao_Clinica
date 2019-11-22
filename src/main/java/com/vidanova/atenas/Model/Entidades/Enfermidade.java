@@ -10,7 +10,7 @@ public class Enfermidade {
     String CID;
 
     @NotBlank(message = "Nome não pode estar em branco")
-    @Size(min = 6,max = 260, message = "Tamanho inválido")
+    @Size(min = 6,max = 260, message = "Tamanho nome inválido")
     String nome;
 
     public Enfermidade(int idEnfermidade,String CID,String nome){

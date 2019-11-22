@@ -2,6 +2,7 @@ package com.vidanova.atenas.Model;
 
 import com.vidanova.atenas.Model.Entidades.Enfermidade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -30,22 +31,31 @@ public class EnfermidadeRepository implements Repository<Enfermidade> {
 
     @Override
     public Optional<Enfermidade> encontrarPorId(int id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM TB_Enfermidade WHERE id_Enfermidade=?",
-                new Object[]{id},
-                (resultSet,rowNum) -> Optional.of(  new Enfermidade(resultSet.getInt("id_Enfermidade"),
-                                                        resultSet.getString("CID"),
-                                                        resultSet.getString("nome"))));
+        try{
+            return jdbcTemplate.queryForObject("SELECT * FROM TB_Enfermidade WHERE id_Enfermidade=?",
+                    new Object[]{id},
+                    (resultSet,rowNum) -> Optional.of(  new Enfermidade(resultSet.getInt("id_Enfermidade"),
+                            resultSet.getString("CID"),
+                            resultSet.getString("nome"))));
+        }catch(EmptyResultDataAccessException e){
+            return null;
+        }
+
     }
 
     @Override
     public List<Enfermidade> encontrarTodos() {
-        return jdbcTemplate.query(
+        try{
+            return jdbcTemplate.query(
                 "SELECT * FROM TB_Enfermidade",
                 (rs,rowNum)-> new Enfermidade(
                         rs.getInt("id_Enfermidade"),
                         rs.getString("CID"),
                         rs.getString("nome")
-                ));
+                ));}catch (EmptyResultDataAccessException e){
+            return null;
+        }
+
     }
     @Override
     public int deletar(int id){
