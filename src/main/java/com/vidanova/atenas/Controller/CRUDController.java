@@ -28,7 +28,7 @@ public abstract class CRUDController<T> {
     }
 
     @GetMapping(value="/{id}")
-    public Optional<T> findById(@PathVariable("id") int id){
+    public ResponseEntity<Optional<T>> findById(@PathVariable("id") int id){
         return repository.encontrarPorId(id);
     }
 

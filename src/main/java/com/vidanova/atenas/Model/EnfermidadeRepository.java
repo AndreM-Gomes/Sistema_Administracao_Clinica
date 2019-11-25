@@ -3,8 +3,11 @@ package com.vidanova.atenas.Model;
 import com.vidanova.atenas.Model.Entidades.Enfermidade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,15 +33,17 @@ public class EnfermidadeRepository implements Repository<Enfermidade> {
     }
 
     @Override
-    public Optional<Enfermidade> encontrarPorId(int id) {
+    public ResponseEntity<Optional<Enfermidade>> encontrarPorId(int id) {
         try{
-            return jdbcTemplate.queryForObject("SELECT * FROM TB_Enfermidade WHERE id_Enfermidade=?",
+            Optional<Enfermidade> resultado =  jdbcTemplate.queryForObject("SELECT * FROM TB_Enfermidade WHERE id_Enfermidade=?",
                     new Object[]{id},
                     (resultSet,rowNum) -> Optional.of(  new Enfermidade(resultSet.getInt("id_Enfermidade"),
                             resultSet.getString("CID"),
                             resultSet.getString("nome"))));
+            ResponseEntity<Optional<Enfermidade>> entity = new ResponseEntity<>(resultado,HttpStatus.OK);
+            return entity;
         }catch(EmptyResultDataAccessException e){
-            return null;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
     }
