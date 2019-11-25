@@ -48,6 +48,21 @@ public class EnfermidadeRepository implements Repository<Enfermidade> {
 
     }
 
+    public ResponseEntity<Optional<Enfermidade>> encontrarPorCID(String CID) {
+        try{
+            Optional<Enfermidade> resultado =  jdbcTemplate.queryForObject("SELECT * FROM TB_Enfermidade WHERE CID=?",
+                    new Object[]{CID},
+                    (resultSet,rowNum) -> Optional.of(  new Enfermidade(resultSet.getInt("id_Enfermidade"),
+                            resultSet.getString("CID"),
+                            resultSet.getString("nome"))));
+            ResponseEntity<Optional<Enfermidade>> entity = new ResponseEntity<>(resultado,HttpStatus.OK);
+            return entity;
+        }catch(EmptyResultDataAccessException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     @Override
     public List<Enfermidade> encontrarTodos() {
         try{

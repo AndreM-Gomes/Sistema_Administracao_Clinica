@@ -28,8 +28,8 @@ public abstract class CRUDController<T> {
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<Optional<T>> findById(@PathVariable("id") int id){
-        return repository.encontrarPorId(id);
+    public ResponseEntity<Optional<T>> findById(@PathVariable("id") String id){
+        return repository.encontrarPorId(Integer.parseInt(id));
     }
 
     @PostMapping
