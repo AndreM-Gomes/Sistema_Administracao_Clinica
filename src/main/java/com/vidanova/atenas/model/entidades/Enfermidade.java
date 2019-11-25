@@ -3,7 +3,7 @@ package com.vidanova.atenas.model.entidades;
 import javax.validation.constraints.*;
 
 public class Enfermidade {
-    private int idEnfermidade;
+    private int id;
 
     @NotBlank(message = "CID não pode estar em branco")
     @Pattern(regexp = "^[A-Z]\\d{2}$",message = "CID Inválido")
@@ -12,17 +12,18 @@ public class Enfermidade {
     @NotBlank(message = "Nome não pode estar em branco")
     @Size(min = 6,max = 260, message = "Tamanho nome inválido")
     private String nome;
-
-    public Enfermidade(int idEnfermidade,String CID,String nome){
-       this.idEnfermidade = idEnfermidade;
+    public Enfermidade(){
+    }
+    public Enfermidade(int id, String CID, String nome){
+       this.id = id;
        this.CID = CID;
        this.nome = nome;
     }
     public int getId(){
-        return this.idEnfermidade;
+        return this.id;
     }
-    public void setIdEnfermidade(int idEnfermidade) {
-        this.idEnfermidade = idEnfermidade;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCID() {

@@ -1,5 +1,6 @@
 package com.vidanova.atenas.controller;
 
+import com.vidanova.atenas.model.entidades.Enfermidade;
 import com.vidanova.atenas.service.GenericService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public abstract class CRUDController<T> {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<T> criar(@Valid @RequestBody T t){
         service.salvar(t);
-        return ResponseEntity.ok(t);
+        return new ResponseEntity<T>(HttpStatus.CREATED);
     }
 
     @PutMapping(value = "/{id}")
