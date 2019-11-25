@@ -23,16 +23,7 @@ public class AtenasApplication{
         SpringApplication.run(AtenasApplication.class, args);
 
     }
-    @Bean
-    public DataSource mysqlDataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/atenas");
-        dataSource.setUsername("root");
-        dataSource.setPassword("MysqlRoot1");
 
-        return dataSource;
-    }
 
 
 }
