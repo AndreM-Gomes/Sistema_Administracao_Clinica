@@ -1,7 +1,6 @@
-package com.vidanova.atenas.Service;
+package com.vidanova.atenas.service;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

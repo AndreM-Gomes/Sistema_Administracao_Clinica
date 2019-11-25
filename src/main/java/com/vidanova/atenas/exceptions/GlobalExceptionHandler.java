@@ -1,4 +1,4 @@
-package com.vidanova.atenas.Exceptions;
+package com.vidanova.atenas.exceptions;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -1,17 +1,11 @@
-package com.vidanova.atenas.Controller;
+package com.vidanova.atenas.controller;
 
-import com.vidanova.atenas.Model.Entidades.Enfermidade;
-import com.vidanova.atenas.Model.Repository;
-import com.vidanova.atenas.Service.GenericService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vidanova.atenas.service.GenericService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import javax.validation.ValidationException;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.vidanova.atenas.Model.Entidades;
+package com.vidanova.atenas.model.entidades;
 
 import javax.validation.constraints.*;
 

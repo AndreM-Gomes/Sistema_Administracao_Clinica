@@ -1,14 +1,10 @@
-package com.vidanova.atenas.Service;
+package com.vidanova.atenas.service;
 
-import com.vidanova.atenas.Model.EnfermidadeRepository;
-import com.vidanova.atenas.Model.Entidades.Enfermidade;
-import com.vidanova.atenas.Model.Repository;
+import com.vidanova.atenas.model.EnfermidadeRepository;
+import com.vidanova.atenas.model.entidades.Enfermidade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

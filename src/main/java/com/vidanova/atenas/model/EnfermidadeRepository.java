@@ -1,13 +1,12 @@
-package com.vidanova.atenas.Model;
+package com.vidanova.atenas.model;
 
-import com.vidanova.atenas.Model.Entidades.Enfermidade;
+import com.vidanova.atenas.model.entidades.Enfermidade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

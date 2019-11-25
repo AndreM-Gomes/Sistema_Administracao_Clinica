@@ -1,4 +1,4 @@
-package com.vidanova.atenas.Model;
+package com.vidanova.atenas.model;
 
 import org.springframework.http.ResponseEntity;
 
