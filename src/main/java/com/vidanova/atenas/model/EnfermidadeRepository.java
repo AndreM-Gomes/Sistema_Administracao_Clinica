@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,11 +41,13 @@ public class EnfermidadeRepository implements Repository<Enfermidade> {
                             resultSet.getString("CID"),
                             resultSet.getString("nome"))));
             ResponseEntity<Optional<Enfermidade>> entity = new ResponseEntity<>(resultado,HttpStatus.OK);
+            if(!entity.hasBody()){
+                throw new EmptyResultDataAccessException(0);
+            }
             return entity;
-        }catch(EmptyResultDataAccessException e){
+        }catch(EmptyResultDataAccessException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
 
     public ResponseEntity<Optional<Enfermidade>> encontrarPorCID(String CID) {

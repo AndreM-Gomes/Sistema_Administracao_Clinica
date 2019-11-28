@@ -3,6 +3,7 @@ package com.vidanova.atenas.service;
 import com.vidanova.atenas.model.EnfermidadeRepository;
 import com.vidanova.atenas.model.entidades.Enfermidade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
@@ -34,17 +35,18 @@ public class EnfermidadeService implements GenericService<Enfermidade> {
 
     @Override
     public int deletar(int id) {
-        return 0;
+        return enfermidadeRepository.deletar(id);
     }
+
 
     public ResponseEntity<Optional<Enfermidade>> encontrarPorCIDouID(String id){
         if (id.matches("^[A-Z]\\d{2}$")){
             return enfermidadeRepository.encontrarPorCID(id);
         }
-        else if(id.matches("^\\d")){
+        else if(id.matches("^\\d+")){
             return enfermidadeRepository.encontrarPorId(Integer.parseInt(id));
         }else{
-            return null;
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

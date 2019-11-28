@@ -1,6 +1,7 @@
 package com.vidanova.atenas.model.entidades;
 
 import javax.validation.constraints.*;
+import java.util.Objects;
 
 public class Enfermidade {
     private int id;
@@ -42,4 +43,18 @@ public class Enfermidade {
         this.nome = nome;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Enfermidade)) return false;
+        Enfermidade that = (Enfermidade) o;
+        return getId() == that.getId() &&
+                getCID().equals(that.getCID()) &&
+                getNome().equals(that.getNome());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCID(), getNome());
+    }
 }
