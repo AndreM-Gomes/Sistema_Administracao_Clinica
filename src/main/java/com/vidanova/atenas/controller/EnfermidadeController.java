@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,9 +21,17 @@ public class EnfermidadeController extends CRUDController<Enfermidade> {
         super(service);
     }
 
-    @Override
+    @GetMapping
+    public List<Enfermidade> listarTodos(
+            @RequestParam(required = false)Integer id_Enfermidade,
+            @RequestParam(required = false)String CID,
+            @RequestParam(required = false)String nome
+    ) {
+        return enfermidadeService.pesquisaPorParametrosExatos(id_Enfermidade,CID,nome);
+    }
+
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Enfermidade>> findById(@PathVariable String id) {
-        return enfermidadeService.encontrarPorCIDouID(id);
+    public ResponseEntity<Optional<Enfermidade>> findById(@PathVariable int id) {
+        return enfermidadeService.encontrarPorId(id);
     }
 }

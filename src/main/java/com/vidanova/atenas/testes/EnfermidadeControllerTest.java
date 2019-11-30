@@ -1,26 +1,18 @@
 package com.vidanova.atenas.testes;
 
-import com.vidanova.atenas.model.Repository;
 import com.vidanova.atenas.model.entidades.Enfermidade;
 import com.vidanova.atenas.service.EnfermidadeService;
-import org.apache.coyote.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 //TODO ADICIONAR COMENTARIO AOS METODOS
@@ -34,8 +26,8 @@ public class EnfermidadeControllerTest extends AbstractTest{
     @Before
     public void setUp(){
         super.setUp();
-        jdbcTemplate.update("INSERT INTO TB_Enfermidade VALUES (1,'A99','Doença teste0')");
-        jdbcTemplate.update("INSERT INTO TB_Enfermidade VALUES (2,'A99','Doença teste0')");
+        jdbcTemplate.update("INSERT INTO TB_Enfermidade VALUES (1,'A90','Doença teste0')");
+        jdbcTemplate.update("INSERT INTO TB_Enfermidade VALUES (2,'A91','Doença teste0')");
     }
 
     @Test
@@ -71,8 +63,10 @@ public class EnfermidadeControllerTest extends AbstractTest{
         assertEquals(content,"");
 
         //Verificando se o objeto foi realmente criado
-        Enfermidade consulta = service.encontrarPorId(3).getBody().get();
-        assertEquals(enfermidade,consulta);
+        MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get("/enfermidade/3")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+
+        assertEquals(mapToJson(enfermidade),getResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
 
     @Test
@@ -112,6 +106,27 @@ public class EnfermidadeControllerTest extends AbstractTest{
         .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
         assertEquals(mapToJson(enfermidade),getResult.getResponse().getContentAsString(Charset.defaultCharset()));
+    }
+
+    @Test
+    public void verificar_pesquisa_porCID() throws Exception{
+        //Realizando requisição - Preparar cenário
+        String uri = "/enfermidade";
+        Enfermidade enfermidade = new Enfermidade(5,"A50","Doença Teste teste");
+        String jsonEntrada = super.mapToJson(enfermidade);
+
+        MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
+                                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                                .content(jsonEntrada)).andReturn();
+        //Verificando resposta
+        int status = mvcResult.getResponse().getStatus();
+        assertEquals(HttpStatus.CREATED,HttpStatus.resolve(status));
+
+        //Realizando requisição - Realizar pesquisa teste
+        uri ="/enfermidade?nome=Doença Teste teste";
+        mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
+                                    .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
+        assertEquals("[" + mapToJson(enfermidade)+"]",mvcResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
     @After
     public void limpar(){

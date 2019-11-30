@@ -18,14 +18,9 @@ public abstract class CRUDController<T> {
         this.service = service;
     }
 
-    @GetMapping
-    public List<T> listarTodos(){
-        return service.encontrarTodos();
-    }
-
     @GetMapping(value="/{id}")
-    public ResponseEntity<Optional<T>> findById(@PathVariable("id") String id){
-        return service.encontrarPorId(Integer.parseInt(id));
+    public ResponseEntity<Optional<T>> findById(@PathVariable("id") int id){
+        return service.encontrarPorId(id);
     }
 
     @PostMapping
@@ -46,4 +41,5 @@ public abstract class CRUDController<T> {
     public void apagar(@PathVariable("id")int id){
         service.deletar(id);
     }
+
 }
