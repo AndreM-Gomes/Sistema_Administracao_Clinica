@@ -107,8 +107,6 @@ public class EnfermidadeRepository implements GenericRepository<Enfermidade> {
             }catch (EmptyResultDataAccessException e){
                 return null;
             }
-
-
         }
     }
 }

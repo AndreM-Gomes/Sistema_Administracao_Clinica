@@ -22,16 +22,11 @@ public class EnfermidadeController extends CRUDController<Enfermidade> {
     }
 
     @GetMapping
-    public List<Enfermidade> listarTodos(
+    public List<Enfermidade> listarTodosParametrosExatos(
             @RequestParam(required = false)Integer id_Enfermidade,
             @RequestParam(required = false)String CID,
             @RequestParam(required = false)String nome
     ) {
         return enfermidadeService.pesquisaPorParametrosExatos(id_Enfermidade,CID,nome);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Enfermidade>> findById(@PathVariable int id) {
-        return enfermidadeService.encontrarPorId(id);
     }
 }

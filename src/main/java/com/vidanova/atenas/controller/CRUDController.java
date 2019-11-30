@@ -22,14 +22,12 @@ public abstract class CRUDController<T> {
     public ResponseEntity<Optional<T>> findById(@PathVariable("id") int id){
         return service.encontrarPorId(id);
     }
-
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<T> criar(@Valid @RequestBody T t){
         service.salvar(t);
         return new ResponseEntity<T>(HttpStatus.CREATED);
     }
-
     @PutMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void atualizar(@Valid @PathVariable("id") int id,@RequestBody T t){
