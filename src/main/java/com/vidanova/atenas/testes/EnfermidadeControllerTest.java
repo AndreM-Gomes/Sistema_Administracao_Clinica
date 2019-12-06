@@ -6,15 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import java.nio.charset.Charset;
-
-import static org.junit.Assert.*;
 
 public class EnfermidadeControllerTest extends AbstractTest{
 
@@ -44,13 +36,13 @@ public class EnfermidadeControllerTest extends AbstractTest{
     @Test
     public void verificar_se_apagado() throws Exception{
         //Criando cenário
-        super.verificar_se_apagado("/enfermidade");
+        super.verificar_se_apagado("/enfermidade", "4");
     }
 
     @Test
     public void verificar_se_atualizado() throws  Exception{
         Enfermidade enfermidade = new Enfermidade(1,"A99","Doença teste1");
-        super.verificar_se_atualizado("/enfermidade",enfermidade);
+        super.verificar_se_atualizado("/enfermidade",enfermidade, "1");
     }
 
     @Test

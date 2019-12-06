@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vidanova.atenas.AtenasApplication;
 import com.vidanova.atenas.model.GenericRepository;
-import com.vidanova.atenas.model.entidades.Enfermidade;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -80,10 +78,10 @@ public abstract class AbstractTest<T> {
         assertTrue(entidades.length > 0);
         assertEquals(200,status);
     }
-    protected void verificar_se_apagado(String uri) throws Exception{
+    protected void verificar_se_apagado(String uri, String idEntidade) throws Exception{
         //Criando cenário
         //Realizando requisição
-        uri = uri + "/4";
+        uri = uri + "/" + idEntidade;
         MvcResult mvcResultDelete = mvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
         int status = mvcResultDelete.getResponse().getStatus();
         assertEquals(HttpStatus.OK,HttpStatus.resolve(status));
@@ -93,9 +91,9 @@ public abstract class AbstractTest<T> {
         int statusGet = mvcResultGet.getResponse().getStatus();
         assertEquals(HttpStatus.NOT_FOUND,HttpStatus.resolve(statusGet));
     }
-    protected void verificar_se_atualizado(String uri,T entidade) throws  Exception{
+    protected void verificar_se_atualizado(String uri, T entidade, String idEntidade) throws  Exception{
         //Realizando requisição
-        uri += "/1";
+        uri = uri +  "/" + idEntidade;
         String jsonEntrada = mapToJson(entidade);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
