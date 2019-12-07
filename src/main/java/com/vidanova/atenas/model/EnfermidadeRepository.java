@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import java.util.*;
 
 @org.springframework.stereotype.Repository
-public class EnfermidadeRepository implements GenericRepository<Enfermidade> {
+public class EnfermidadeRepository extends GenericRepository<Enfermidade> {
 
     @Autowired
     private NamedParameterJdbcTemplate jdbcTemplate;
@@ -79,35 +79,6 @@ public class EnfermidadeRepository implements GenericRepository<Enfermidade> {
         Map<String,Object> parametros = new HashMap<>();
         parametros.put("id",id);
         return jdbcTemplate.update("DELETE FROM TB_Enfermidade WHERE id_Enfermidade=:id",parametros);
-    }
-
-    @Override
-    public List<Enfermidade> pesquisaPorParametrosExatos(Map<String, String> paramentrosPesquisa) {
-        StringBuilder sql = new StringBuilder(paramentrosPesquisa.size());
-        Map<String, Object> sqlParametros = new HashMap<>();
-        sql.append("SELECT * FROM TB_Enfermidade");
-        if (paramentrosPesquisa.size() == 0) {
-            return encontrarTodos();
-        } else {
-            sql.append(" WHERE ");
-            paramentrosPesquisa.forEach((chave, valor) -> {
-                sql.append(chave + "= :" + chave);
-                sql.append(" AND ");
-                sqlParametros.put(chave, paramentrosPesquisa.get(chave));
-            });
-            sql.delete(sql.length() - 4, sql.length());
-            try{
-                return jdbcTemplate.query(String.valueOf(sql), sqlParametros,
-                        (rs, rn) -> new Enfermidade(
-                                        rs.getInt("id_Enfermidade"),
-                                        rs.getString("CID"),
-                                        rs.getString("nome")
-                                )
-                        );
-            }catch (EmptyResultDataAccessException e){
-                return null;
-            }
-        }
     }
 }
 

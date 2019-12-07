@@ -50,7 +50,12 @@ public class EnfermidadeService implements GenericService<Enfermidade> {
         if(nome != null){
             paramentrosPesquisa.put("nome",nome);
         }
-        return genericRepository.pesquisaPorParametrosExatos(paramentrosPesquisa);
+        return genericRepository.pesquisaPorParametrosExatos(paramentrosPesquisa,
+                (rs, rowNum) -> new Enfermidade(
+                rs.getInt("id_Enfermidade"),
+                rs.getString("CID"),
+                rs.getString("nome")
+        ),"TB_Enfermidade");
     }
 
 }
