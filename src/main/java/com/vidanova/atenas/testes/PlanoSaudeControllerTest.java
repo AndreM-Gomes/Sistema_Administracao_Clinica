@@ -51,8 +51,8 @@ public class PlanoSaudeControllerTest extends AbstractTest{
     }
     @Test
     public void verificar_pesquisa_parametros_exatos() throws Exception{
-        PlanoSaude planoSaude = new PlanoSaude(5,"A12A15A14","Greenline","Especial");
-        super.verificar_pesquisa_parametros_exatos(uriRecurso + "?nome=Greenline&tipo=Especial",planoSaude);
+        PlanoSaude planoSaude = new PlanoSaude(5,"A12A15A14","Greenline Premium","Especial");
+        super.verificar_pesquisa_parametros_exatos(uriRecurso + "?nome=Greenline Premium&tipo=Especial",planoSaude);
     }
     @After
     public void limpar(){
