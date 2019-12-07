@@ -12,6 +12,9 @@ public class PlanoSaude{
         this.nome = nome;
         this.tipo = tipo;
     }
+    public PlanoSaude(){
+
+    }
     public int getId_Plan_Saude() {
         return id_Plan_Saude;
     }

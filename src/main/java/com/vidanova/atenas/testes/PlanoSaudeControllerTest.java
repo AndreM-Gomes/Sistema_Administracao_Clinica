@@ -25,6 +25,7 @@ public class PlanoSaudeControllerTest extends AbstractTest{
         super.setUp();
         jdbcTemplate.update("INSERT INTO TB_Plan_Saude VALUES (1,'A12A15A14','Greenline','Especial')");
         jdbcTemplate.update("INSERT INTO TB_Plan_Saude VALUES (2,'B12B15B14','Intermedica','Especial C Obstetrícia')");
+        jdbcTemplate.update("INSERT INTO TB_Plan_Saude VALUES (4,'656565','Bradesco','Especial Senior')");
     }
     @Test
     public void verificar_se_lista_todos() throws Exception{
@@ -36,7 +37,7 @@ public class PlanoSaudeControllerTest extends AbstractTest{
                             new PlanoSaude(3,
                                     "11565465432",
                                     "Samed",
-                                    "Global com quarto"));
+                                    "Global com quarto"),"3");
     }
     public void verificar_se_apagado() throws Exception{
         super.verificar_se_apagado(uriRecurso,"1");

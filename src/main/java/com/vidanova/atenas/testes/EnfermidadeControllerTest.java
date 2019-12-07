@@ -30,7 +30,7 @@ public class EnfermidadeControllerTest extends AbstractTest{
 
     @Test
     public void verificar_se_criado() throws Exception{
-        super.verificar_se_criado("/enfermidade",new Enfermidade(3,"A99","Doença teste1"));
+        super.verificar_se_criado("/enfermidade",new Enfermidade(3,"A99","Doença teste1"), "3");
     }
 
     @Test

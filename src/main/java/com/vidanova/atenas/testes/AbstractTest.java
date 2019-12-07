@@ -48,7 +48,7 @@ public abstract class AbstractTest<T> {
         return objectMapper.readValue(json,clazz);
     }
 
-    protected void verificar_se_criado(String uri,T entidade) throws Exception{
+    protected void verificar_se_criado(String uri, T entidade, String idEntidade) throws Exception{
         //Realizando requisição
         String jsonEntrada = mapToJson(entidade);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
@@ -62,7 +62,7 @@ public abstract class AbstractTest<T> {
         assertEquals(content,"");
 
         //Verificando se o objeto foi realmente criado
-        MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get("/enfermidade/3")
+        MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get(uri + "/" +idEntidade)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
         assertEquals(mapToJson(entidade),getResult.getResponse().getContentAsString(Charset.defaultCharset()));
