@@ -1,20 +1,22 @@
 package com.vidanova.atenas.model.entidades;
 
-public class PlanoSaude{
+public class PlanoSaude {
     int id_Plan_Saude;
     String num_Plan;
     String nome;
     String tipo;
 
-    public PlanoSaude(int id_Plan_Saude,String num_Plan,String nome,String tipo){
+    public PlanoSaude(int id_Plan_Saude, String num_Plan, String nome, String tipo) {
         this.id_Plan_Saude = id_Plan_Saude;
         this.num_Plan = num_Plan;
         this.nome = nome;
         this.tipo = tipo;
     }
-    public PlanoSaude(){
+
+    public PlanoSaude() {
 
     }
+
     public int getId_Plan_Saude() {
         return id_Plan_Saude;
     }

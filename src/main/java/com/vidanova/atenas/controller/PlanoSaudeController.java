@@ -28,7 +28,7 @@ public class PlanoSaudeController extends CRUDController<PlanoSaude> {
             @RequestParam(required = false) String numPlan,
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String tipo
-    ){
-        return planoSaudeService.pesquisaPorParametrosExatos(id,numPlan,nome,tipo);
+    ) {
+        return planoSaudeService.pesquisaPorParametrosExatos(id, numPlan, nome, tipo);
     }
 }

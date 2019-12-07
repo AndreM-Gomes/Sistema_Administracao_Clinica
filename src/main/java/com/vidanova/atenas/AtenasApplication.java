@@ -2,18 +2,11 @@ package com.vidanova.atenas;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-
-import javax.sql.DataSource;
 
 @SpringBootApplication
-public class AtenasApplication{
+public class AtenasApplication {
 
     private static final Logger log = LoggerFactory.getLogger(AtenasApplication.class);
 
@@ -21,7 +14,6 @@ public class AtenasApplication{
         SpringApplication.run(AtenasApplication.class, args);
 
     }
-
 
 
 }

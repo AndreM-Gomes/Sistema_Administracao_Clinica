@@ -17,29 +17,33 @@ public abstract class GenericRepository<T> {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     public abstract int salvar(T entity);
+
     public abstract int atualizar(T entity, int id);
+
     public abstract ResponseEntity<Optional<T>> encontrarPorId(int id);
+
     public abstract List<T> encontrarTodos();
+
     public abstract int deletar(int id);
-    public List<T> pesquisaPorParametrosExatos(Map<String,String> parametrosPesquisa,
+
+    public List<T> pesquisaPorParametrosExatos(Map<String, String> parametrosPesquisa,
                                                RowMapper<T> rowMapper,
-                                               String nomeTabela){
+                                               String nomeTabela) {
         StringBuilder sql = new StringBuilder(60);
-        Map<String,Object> sqlParametros = new HashMap<>();
+        Map<String, Object> sqlParametros = new HashMap<>();
         sql.append("SELECT * FROM " + nomeTabela);
-        if(parametrosPesquisa.size()==0){
+        if (parametrosPesquisa.size() == 0) {
             return encontrarTodos();
-        }
-        else{
+        } else {
             sql.append(" WHERE ");
-            parametrosPesquisa.forEach((chave,valor)->{
+            parametrosPesquisa.forEach((chave, valor) -> {
                 sql.append(chave).append("= :").append(chave).append(" AND ");
                 sqlParametros.put(chave, parametrosPesquisa.get(chave));
             });
-            sql.delete(sql.length()-4,sql.length());
+            sql.delete(sql.length() - 4, sql.length());
             try {
-                return jdbcTemplate.query(String.valueOf(sql),sqlParametros,rowMapper);
-            }catch (EmptyResultDataAccessException e ){
+                return jdbcTemplate.query(String.valueOf(sql), sqlParametros, rowMapper);
+            } catch (EmptyResultDataAccessException e) {
                 return null;
             }
         }

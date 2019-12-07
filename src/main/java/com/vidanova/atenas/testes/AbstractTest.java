@@ -35,20 +35,22 @@ public abstract class AbstractTest<T> {
     WebApplicationContext webApplicationContext;
     GenericRepository<T> repository;
 
-    protected void setUp(){
+    protected void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-    protected String mapToJson(Object obj) throws JsonProcessingException{
+
+    protected String mapToJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
     }
-    protected T mapFromJson(String json,Class<T> clazz)
-            throws JsonParseException, JsonMappingException, IOException{
+
+    protected T mapFromJson(String json, Class<T> clazz)
+            throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(json,clazz);
+        return objectMapper.readValue(json, clazz);
     }
 
-    protected void verificar_se_criado(String uri, T entidade, String idEntidade) throws Exception{
+    protected void verificar_se_criado(String uri, T entidade, String idEntidade) throws Exception {
         //Realizando requisição
         String jsonEntrada = mapToJson(entidade);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.post(uri)
@@ -57,60 +59,64 @@ public abstract class AbstractTest<T> {
 
         //Verificando resposta e status da requisição
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(HttpStatus.CREATED,HttpStatus.resolve(status));
+        assertEquals(HttpStatus.CREATED, HttpStatus.resolve(status));
         String content = mvcResult.getResponse().getContentAsString();
-        assertEquals(content,"");
+        assertEquals(content, "");
 
         //Verificando se o objeto foi realmente criado
-        MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get(uri + "/" +idEntidade)
+        MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get(uri + "/" + idEntidade)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
-        assertEquals(mapToJson(entidade),getResult.getResponse().getContentAsString(Charset.defaultCharset()));
+        assertEquals(mapToJson(entidade), getResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
-    protected void verificar_se_lista_todos(String uri,Class<T> clazz) throws Exception{
+
+    protected void verificar_se_lista_todos(String uri, Class<T> clazz) throws Exception {
         //Realizando requisição
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .accept(MediaType.APPLICATION_JSON)).andReturn();
 
         int status = mvcResult.getResponse().getStatus();
         String content = mvcResult.getResponse().getContentAsString();
-        T[] entidades = (T[]) mapFromJson(content,clazz);
+        T[] entidades = (T[]) mapFromJson(content, clazz);
         assertTrue(entidades.length > 0);
-        assertEquals(200,status);
+        assertEquals(200, status);
     }
-    protected void verificar_se_apagado(String uri, String idEntidade) throws Exception{
+
+    protected void verificar_se_apagado(String uri, String idEntidade) throws Exception {
         //Criando cenário
         //Realizando requisição
         uri = uri + "/" + idEntidade;
         MvcResult mvcResultDelete = mvc.perform(MockMvcRequestBuilders.delete(uri)).andReturn();
         int status = mvcResultDelete.getResponse().getStatus();
-        assertEquals(HttpStatus.OK,HttpStatus.resolve(status));
+        assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
 
         //garantindo que objeto foi apagado
         MvcResult mvcResultGet = mvc.perform(MockMvcRequestBuilders.get(uri)).andReturn();
         int statusGet = mvcResultGet.getResponse().getStatus();
-        assertEquals(HttpStatus.NOT_FOUND,HttpStatus.resolve(statusGet));
+        assertEquals(HttpStatus.NOT_FOUND, HttpStatus.resolve(statusGet));
     }
-    protected void verificar_se_atualizado(String uri, T entidade, String idEntidade) throws  Exception{
+
+    protected void verificar_se_atualizado(String uri, T entidade, String idEntidade) throws Exception {
         //Realizando requisição
-        uri = uri +  "/" + idEntidade;
+        uri = uri + "/" + idEntidade;
         String jsonEntrada = mapToJson(entidade);
         MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(jsonEntrada)).andReturn();
         //Verificando resposta
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(HttpStatus.OK,HttpStatus.resolve(status));
+        assertEquals(HttpStatus.OK, HttpStatus.resolve(status));
         String content = mvcResult.getResponse().getContentAsString();
-        assertEquals(content,"");
+        assertEquals(content, "");
 
         //Verificando se objeto foi atualizado
         MvcResult getResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
 
-        assertEquals(mapToJson(entidade),getResult.getResponse().getContentAsString(Charset.defaultCharset()));
+        assertEquals(mapToJson(entidade), getResult.getResponse().getContentAsString(Charset.defaultCharset()));
     }
-    protected void verificar_pesquisa_parametros_exatos(String uri,T entidade) throws Exception{
+
+    protected void verificar_pesquisa_parametros_exatos(String uri, T entidade) throws Exception {
         //Realizando requisição - Preparar cenário
         String jsonEntrada = mapToJson(entidade);
 
@@ -119,12 +125,12 @@ public abstract class AbstractTest<T> {
                 .content(jsonEntrada)).andReturn();
         //Verificando resposta
         int status = mvcResult.getResponse().getStatus();
-        assertEquals(HttpStatus.CREATED,HttpStatus.resolve(status));
+        assertEquals(HttpStatus.CREATED, HttpStatus.resolve(status));
 
         //Realizando requisição - Realizar pesquisa teste
         mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)).andReturn();
-        assertEquals("[" + mapToJson(entidade)+"]",
+        assertEquals("[" + mapToJson(entidade) + "]",
                 mvcResult.getResponse().getContentAsString(Charset.defaultCharset())
         );
     }
